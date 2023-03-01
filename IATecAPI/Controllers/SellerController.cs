@@ -51,7 +51,7 @@ namespace IATecAPI.Controllers
                 return NotFound();
 
             sellerModel.Id = id;
-            //Validar CPF já cadastrado
+            //Validar CPF já cadastrado(cpf não se muda)
             seller = await _sellerRepository.Update(sellerModel, id);
             return Ok(seller);
             //ou NoContent();   
