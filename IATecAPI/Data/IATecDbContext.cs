@@ -31,6 +31,8 @@ namespace IATecAPI.Data
         //
         // Add-Migration VinculoSelSeller -Context IATecDbContext
         // Update-Database -Context IATecDbContext
+        //
+        // Remove-Migration -Context IATecDbContext
 
     }
 }

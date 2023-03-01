@@ -21,7 +21,7 @@ namespace IATecAPI.Models
         public virtual SellerModel? Seller { get; set; }
 
 
-        //public ICollection<SelItemModel> SelItens { get; set; }
+        public ICollection<SelItemModel> SelItens { get; set; }
 
         public bool BlockUpdate(StatusVenda newStatus)
         {
