@@ -14,8 +14,8 @@ namespace IATecAPI.Models
         public int Identificador { get; set; }
 
 
-        public int? SellerId { get; set; }
-        public virtual SellerModel Seller { get; set; }
+        public int SellerId { get; set; }
+        public virtual SellerModel? Seller { get; set; }
 
 
         //public ICollection<SelItemModel> SelItens { get; set; }
