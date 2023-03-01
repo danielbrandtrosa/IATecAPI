@@ -43,7 +43,7 @@ namespace IATecAPI.Repository
                 throw new Exception($"Seller Id {id} not found in Base.");
             }
             sellerById.Name = seller.Name;
-            sellerById.Cpf = seller.Cpf;
+            sellerById.Cpf = seller.Cpf;// permitir para teste
 
             _dbContext.Sellers.Update(sellerById);
             await _dbContext.SaveChangesAsync();

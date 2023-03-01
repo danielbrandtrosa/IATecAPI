@@ -1,4 +1,5 @@
-﻿using IATecAPI.Models;
+﻿using IATecAPI.Extensions;
+using IATecAPI.Models;
 using IATecAPI.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,10 +45,22 @@ namespace IATecAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<SellerModel>> AddSeller([FromBody] SellerModel sellerModel)
         {
-            SellerModel seller = await _sellerRepository.Add(sellerModel);
-            //Validar CPF já cadastrado
-            return Ok(seller);
-            //code 201=created    
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            try
+            {
+                SellerModel seller = await _sellerRepository.Add(sellerModel);
+                //Validar CPF já cadastrado(consultar)
+
+                return Ok(seller);
+                //code 201=created    
+            }
+            catch (Exception)
+            {                
+                return BadRequest();//Customizar mensagem
+            }        
+            
         }
         #endregion
 
@@ -56,15 +69,26 @@ namespace IATecAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<SellerModel>> UpDateSeller([FromBody] SellerModel sellerModel, int id)
         {
-            SellerModel seller = await _sellerRepository.GetById(id);
-            if (seller == null)
-                return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
 
-            sellerModel.Id = id;
-            //Validar CPF já cadastrado(cpf não se muda)
-            seller = await _sellerRepository.Update(sellerModel, id);
-            return Ok(seller);
-            //ou NoContent();   
+            try
+            {
+                SellerModel seller = await _sellerRepository.GetById(id);
+                if (seller == null)
+                    return NotFound();
+
+                sellerModel.Id = id;
+                //Validar CPF já cadastrado(cpf não se muda)
+                seller = await _sellerRepository.Update(sellerModel, id);
+                return Ok(seller);
+                //ou NoContent();   
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();//Customizar mensagem
+            }
         }
         #endregion
 

@@ -1,7 +1,9 @@
-﻿using IATecAPI.Models;
+﻿using IATecAPI.Extensions;
+using IATecAPI.Models;
 using IATecAPI.Repository;
 using IATecAPI.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IATecAPI.Controllers
 {
@@ -34,15 +36,31 @@ namespace IATecAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<SelModel>> UpDateSel([FromBody] SelModel selModel, int id)
         {
-            SelModel sel = await _selRepository.GetById(id);
-            if (sel == null)
-                return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
 
-            selModel.Id = id;
+            try
+            {
+                SelModel sel = await _selRepository.GetById(id);
+                if (sel == null)
+                    return NotFound();
 
-            sel = await _selRepository.UpdateStatus(selModel, id);
-            return Ok(sel);
-            //ou NoContent(); 
+                if (sel.BlockUpdate(selModel.Status))
+                {
+                    return BadRequest("Invalid new Status");//Aviso, ação não permitida
+                }
+
+
+                selModel.Id = id;
+                sel = await _selRepository.UpdateStatus(selModel, id);
+                return Ok(sel);
+                //ou NoContent(); 
+            }
+            catch (Exception)
+            {
+                return BadRequest();//Customizar mensagem
+            }
+
         }
         #endregion
 
@@ -50,9 +68,19 @@ namespace IATecAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<SelModel>> AddSel([FromBody] SelModel selModel)
         {
-            SelModel sel = await _selRepository.Add(selModel);
-             return Ok(sel);
-            //code 201=created 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            try
+            {
+                SelModel sel = await _selRepository.Add(selModel);
+                 return Ok(sel);
+                //code 201=created 
+            }
+            catch (Exception)
+            {
+                return BadRequest();//Customizar mensagem
+            }
+
         }
         //obs: validar com HttpResponseMessage 
         #endregion
