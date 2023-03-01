@@ -1,3 +1,8 @@
+using IATecAPI.Data;
+using IATecAPI.Repository;
+using IATecAPI.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace IATecAPI
 {
     public class Program
@@ -12,6 +17,19 @@ namespace IATecAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            #region Banco e mapeamento
+            //-----Banco
+            builder.Services.AddEntityFrameworkSqlServer()
+                .AddDbContext<IATecDbContext>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")) );
+
+            //----Mapeando
+            builder.Services.AddScoped<ISellerRepository, SellerRepository>();
+            
+            #endregion
+
+
 
             var app = builder.Build();
 
