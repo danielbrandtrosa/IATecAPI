@@ -11,9 +11,9 @@ namespace IATecAPI.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.Identificador).IsRequired();
-            //builder.Property(x => x.SellerId).IsRequired();
+            builder.Property(x => x.SellerId).IsRequired();
 
-            //builder.HasOne(x => x.Seller);
+            builder.HasOne(x => x.Seller);
         }
     }
 }

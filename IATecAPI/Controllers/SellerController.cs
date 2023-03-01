@@ -9,18 +9,22 @@ namespace IATecAPI.Controllers
     [ApiController]
     public class SellerController : ControllerBase
     {
+        #region CONST e PRIV
+
         private readonly ISellerRepository _sellerRepository;
         public SellerController(ISellerRepository sellerRepository)
         {
             _sellerRepository = sellerRepository;
         }
+        #endregion
 
-
-
+        #region GETs
         [HttpGet()]
         public async Task<ActionResult<List<SellerModel>>> GetAllSeller()
         {
             List<SellerModel> lstSellers = await _sellerRepository.GetAll();
+            if (lstSellers == null && lstSellers.Count() == 0)
+                return NotFound();
             return Ok(lstSellers);
         }
 
@@ -33,6 +37,9 @@ namespace IATecAPI.Controllers
 
             return Ok(seller);
         }
+        #endregion
+
+        #region POSTs
 
         [HttpPost]
         public async Task<ActionResult<SellerModel>> AddSeller([FromBody] SellerModel sellerModel)
@@ -42,6 +49,9 @@ namespace IATecAPI.Controllers
             return Ok(seller);
             //code 201=created    
         }
+        #endregion
+
+        #region PUTs
 
         [HttpPut("{id}")]
         public async Task<ActionResult<SellerModel>> UpDateSeller([FromBody] SellerModel sellerModel, int id)
@@ -56,13 +66,19 @@ namespace IATecAPI.Controllers
             return Ok(seller);
             //ou NoContent();   
         }
+        #endregion
 
+        #region DELETEs
         [HttpDelete("{id}")]
         public async Task<ActionResult<SellerModel>> DeleteSeller(int id)
         {
+            SellerModel seller = await _sellerRepository.GetById(id);
+            if (seller == null)
+                return NotFound();
+
             bool apagado = await _sellerRepository.Delete(id);
             return Ok(apagado);
         }
-        
+        #endregion 
     }
 }

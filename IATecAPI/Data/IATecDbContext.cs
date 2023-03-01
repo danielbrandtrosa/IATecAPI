@@ -19,7 +19,6 @@ namespace IATecAPI.Data
         {
             modelBuilder.ApplyConfiguration(new SellerMap());
             modelBuilder.ApplyConfiguration(new SelMap());
-            //modelBuilder.ApplyConfiguration(new SellerMap());
             /*modelBuilder.Entity<SelItemModel>().Property(e => e.Price).HasPrecision(24);*/
             
 
@@ -30,6 +29,8 @@ namespace IATecAPI.Data
         // Add-Migration initialDB -Context IATecDbContext
         // Update-Database -Context IATecDbContext
         //
-        // Add-Migration VinculoTarefaUsuario -Context IATecDbContext
+        // Add-Migration VinculoSelSeller -Context IATecDbContext
+        // Update-Database -Context IATecDbContext
+
     }
 }

@@ -20,7 +20,7 @@ namespace IATecAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<SelModel> RecordSel()
+        public ActionResult<SelModel> AddSel()
         {
             return Ok();
         }

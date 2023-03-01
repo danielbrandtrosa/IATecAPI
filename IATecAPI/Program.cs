@@ -26,7 +26,7 @@ namespace IATecAPI
 
             //----Mapeando
             builder.Services.AddScoped<ISellerRepository, SellerRepository>();
-            
+            builder.Services.AddScoped<ISelRepository, SelRepository>();            
             #endregion
 
 
