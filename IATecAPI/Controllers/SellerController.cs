@@ -57,8 +57,8 @@ namespace IATecAPI.Controllers
                 //code 201=created    
             }
             catch (Exception)
-            {                
-                return BadRequest();//Customizar mensagem
+            {
+                return BadRequest("Problems with adding the saller, contact the administrator.");
             }        
             
         }
@@ -87,7 +87,7 @@ namespace IATecAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();//Customizar mensagem
+                return BadRequest("Problems with update the saller, contact the administrator.");
             }
         }
         #endregion

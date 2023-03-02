@@ -25,6 +25,7 @@ namespace IATecAPI.Repository
         {
             return await _dbContext.Sels
                         .Include(x => x.Seller)
+                        .Include(x => x.SelItens)
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 

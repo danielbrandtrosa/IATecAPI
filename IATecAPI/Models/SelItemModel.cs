@@ -15,8 +15,8 @@ namespace IATecAPI.Models
         [Required]
         public int Quantity { get; set; }
 
-        [Required]
-        public int SelID { get; set; }
-        public SelModel Sel { get; set; }
+
+        //public int SelID { get; set; }
+        //public SelModel Sel { get; set; }
     }
 }

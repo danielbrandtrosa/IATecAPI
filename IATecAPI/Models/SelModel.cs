@@ -50,5 +50,15 @@ namespace IATecAPI.Models
 
             return valStatus;
         }
+
+        public bool ValidateItem()
+        {
+            bool haveItem = false;
+
+            if(SelItens != null && SelItens.Count() > 0)
+                haveItem = true;
+
+            return haveItem;
+        }
     }
 }

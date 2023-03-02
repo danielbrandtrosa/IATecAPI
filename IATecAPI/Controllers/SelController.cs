@@ -58,7 +58,7 @@ namespace IATecAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();//Customizar mensagem
+                return BadRequest("Problems with get the sale, contact the administrator.");
             }
 
         }
@@ -72,13 +72,20 @@ namespace IATecAPI.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             try
             {
+                SelModel newSel = selModel;
+
+                if (!newSel.ValidateItem())
+                {
+                    return BadRequest("Invalid new Status");//Aviso, ação não permitida
+                }
+
                 SelModel sel = await _selRepository.Add(selModel);
                  return Ok(sel);
                 //code 201=created 
             }
             catch (Exception)
             {
-                return BadRequest();//Customizar mensagem
+                return BadRequest("Problems with adding the sale, contact the administrator.");
             }
 
         }
